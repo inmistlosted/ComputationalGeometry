@@ -12,8 +12,8 @@ public class IzomorphStellarTransformation extends JFrame
 
     public IzomorphStellarTransformation(int n, int xZ1, int yZ1, int angleZ1, int xZ2, int yZ2, int angleZ2)
     {
-        super("Ізоморфне перетворення зірковий многокутників");
 
+        super("Ізоморфне перетворення зірковий многокутників");
         this.n = n;
         this.xZ1 = xZ1;
         this.xZ2 = xZ2;
@@ -54,10 +54,12 @@ public class IzomorphStellarTransformation extends JFrame
         g.drawLine(convertX(-100), convertY(0), convertX(100), convertY(0));
         drawStellatingPolygon(xZ1, yZ1, radius, angleZ1, g, Color.BLUE);
         drawStellatingPolygon(xZ2, yZ2, radius, angleZ2,  g, Color.RED);
+        findLinearInterpolation(g, Color.BLACK);
         if (flag == 0){
             repaint();
             flag++;
         }
+
     }
 
     private int convertX(double x){
@@ -252,5 +254,12 @@ public class IzomorphStellarTransformation extends JFrame
         results.add("");
         results.add("<html><p style='padding-left: 120px; font-size: 12px'>Трансляція на: ( " + Math.round(trans[0] * 100) / 100.0
                 + ", " + Math.round(trans[1] * 100) / 100.0 + " )</p></html>");
+    }
+
+    private void findLinearInterpolation(Graphics g, Color color){
+        g.setColor(color);
+        for (int i = 0; i < Z1.size(); i++) {
+            g.drawLine(convertX(Z1.get(i).x), convertY(Z1.get(i).y), convertX(Z2.get(i).x), convertY(Z2.get(i).y));
+        }
     }
 }

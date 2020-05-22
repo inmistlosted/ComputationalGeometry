@@ -24,7 +24,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="D:/SPOS/Lab5" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
@@ -87,7 +87,13 @@
       <workItem from="1588674788005" duration="122000" />
       <workItem from="1588674963141" duration="593000" />
       <workItem from="1588755343579" duration="92000" />
-      <workItem from="1589544960334" duration="289000" />
+      <workItem from="1589544960334" duration="1068000" />
+      <workItem from="1589661841622" duration="599000" />
+      <workItem from="1589721087659" duration="585000" />
+      <workItem from="1589787169433" duration="597000" />
+      <workItem from="1589963299076" duration="2725000" />
+      <workItem from="1590051235978" duration="708000" />
+      <workItem from="1590137504775" duration="2025000" />
     </task>
     <servers />
   </component>
