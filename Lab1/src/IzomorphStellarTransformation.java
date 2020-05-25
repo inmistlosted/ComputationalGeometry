@@ -2,15 +2,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static java.lang.Thread.sleep;
+
 public class IzomorphStellarTransformation extends JFrame
 {
     private int margin = 50, width = 800, height = 600, radius = 30, flag = 0;
     private int n = 9, xZ1, xZ2, yZ1, yZ2, angleZ1, angleZ2;
+    boolean rep = false;
 
     private ArrayList<String> results;
     private ArrayList<Point.Double> Z1, Z2;
+    private ArrayList<Point.Double> Z1draw, Z2draw;
 
-    public IzomorphStellarTransformation(int n, int xZ1, int yZ1, int angleZ1, int xZ2, int yZ2, int angleZ2)
+    public IzomorphStellarTransformation(int n, int xZ1, int yZ1, int angleZ1)
     {
 
         super("Ізоморфне перетворення зірковий многокутників");
@@ -26,16 +30,16 @@ public class IzomorphStellarTransformation extends JFrame
         Z2 = new ArrayList<>();
         initStellatingPolygon(xZ1, yZ1, radius, angleZ1, Z1);
         initStellatingPolygon(xZ2, yZ2, radius, angleZ2, Z2);
-        findTransformation();
+        //findTransformation();
 
         setLayout(new GridLayout(30, 2));
         for (int i = 0; i < 21; i++) {
             add(Box.createHorizontalBox());
         }
-        for (int i = 0; i < results.size(); i++) {
-            JLabel label = new JLabel(results.get(i));
-            add(label);
-        }
+//        for (int i = 0; i < results.size(); i++) {
+//            JLabel label = new JLabel(results.get(i));
+//            add(label);
+//        }
 
         JFrame.setDefaultLookAndFeelDecorated(true);
         //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,6 +48,17 @@ public class IzomorphStellarTransformation extends JFrame
         setLocation(350, 0);
         setResizable(false);
         setVisible(true);
+
+        new Thread(() -> {
+           while (true){
+//               try {
+//                   sleep(1);
+//               } catch (InterruptedException e) {
+//                   e.printStackTrace();
+//               }
+               repaint();
+           }
+        }).start();
     }
 
     @Override
@@ -52,8 +67,15 @@ public class IzomorphStellarTransformation extends JFrame
         super.paint(g);
         g.drawLine(convertX(0), convertY(-100), convertX(0), convertY(100));
         g.drawLine(convertX(-100), convertY(0), convertX(100), convertY(0));
-        drawStellatingPolygon(xZ1, yZ1, radius, angleZ1, g, Color.BLUE);
-        drawStellatingPolygon(xZ2, yZ2, radius, angleZ2,  g, Color.RED);
+        if (!rep){
+            Z1draw = drawStellatingPolygon(xZ1, yZ1, radius, angleZ1, g, Color.BLUE, 1);
+            Z2draw = drawStellatingPolygon(xZ1, yZ1, radius*2, angleZ1+30,  g, Color.RED, 2);
+            rep = true;
+        } else {
+            Z1draw = drawProgress(Z1draw, Z2draw, Color.BLUE, g);
+            Z2draw = drawStellatingPolygon(xZ1, yZ1, radius*2, angleZ1+30,  g, Color.RED, 2);
+        }
+
         findLinearInterpolation(g, Color.BLACK);
         if (flag == 0){
             repaint();
@@ -61,6 +83,8 @@ public class IzomorphStellarTransformation extends JFrame
         }
 
     }
+
+
 
     private int convertX(double x){
         double x_log = x / 100;
@@ -95,7 +119,7 @@ public class IzomorphStellarTransformation extends JFrame
         }
     }
 
-    private void drawStellatingPolygon(int x0, int y0, int radius, int turn,  Graphics graphics, Color color){
+    private ArrayList<Point.Double> drawStellatingPolygon(int x0, int y0, int radius, int turn,  Graphics graphics, Color color, int num){
         graphics.setColor(color);
 
         ArrayList<Point> polToDraw = new ArrayList<>();
@@ -113,11 +137,12 @@ public class IzomorphStellarTransformation extends JFrame
             polygon.add(new Point.Double(x1, y1));
         }
 
-        for (Point.Double aDouble : polygon) {
+        for (int i = 0; i < polygon.size(); i++) {
             double cos = Math.cos(rotation);
             double sin = Math.sin(rotation);
-            double newX = (aDouble.x - x0) * cos - (aDouble.y - y0) * sin + x0;
-            double newY = (aDouble.x - x0) * sin + (aDouble.y - y0) * cos + y0;
+            double newX = (polygon.get(i).x - x0) * cos - (polygon.get(i).y - y0) * sin + x0;
+            double newY = (polygon.get(i).x - x0) * sin + (polygon.get(i).y - y0) * cos + y0;
+            polygon.get(i).setLocation(newX, newY);
             polToDraw.add(new Point(convertX(newX), convertY(newY)));
         }
 
@@ -134,6 +159,50 @@ public class IzomorphStellarTransformation extends JFrame
                 }
             }
         }
+        return polygon;
+    }
+
+    private double line(Point.Double p1, Point.Double p2, double x){
+        return ((x - p1.x) * (p2.y - p1.y)) / (p2.x - p1.x) + p1.y;
+    }
+
+    private ArrayList<Point.Double> drawProgress(ArrayList<Point.Double> pol1, ArrayList<Point.Double> pol2, Color color, Graphics graphics){
+        graphics.setColor(color);
+
+        for (int i = 0; i < pol1.size(); i++) {
+            Point.Double p1 = pol1.get(i);
+            Point.Double p2 = pol2.get(i);
+
+            if (p1.x > p2.x){
+                pol1.get(i).setLocation(pol1.get(i).x - 0.1, line(p1, p2, pol1.get(i).x - 0.1));
+            } else {
+                pol1.get(i).setLocation(pol1.get(i).x + 0.1, line(p1, p2, pol1.get(i).x + 0.1));
+            }
+
+
+        }
+
+        ArrayList<Point> polToDraw = new ArrayList<>();
+        int retreat = (n - 5) / 2 + 1;
+
+        for (Point.Double aDouble : pol1) {
+            polToDraw.add(new Point(convertX(aDouble.x), convertY(aDouble.y)));
+        }
+
+        for (int i = 0; i < n-2; i++) {
+            for (int j = 0; j < pol1.size(); j++) {
+                if (n % 2 == 1){
+                    if (j == i + retreat + 1 || j == i + retreat + 2){
+                        graphics.drawLine(polToDraw.get(i).x, polToDraw.get(i).y, polToDraw.get(j).x, polToDraw.get(j).y);
+                    }
+                } else {
+                    if (j == i + retreat + 1 || j == i + retreat + 3){
+                        graphics.drawLine(polToDraw.get(i).x, polToDraw.get(i).y, polToDraw.get(j).x, polToDraw.get(j).y);
+                    }
+                }
+            }
+        }
+        return pol1;
     }
 
     private void findTransformation(){
@@ -258,8 +327,8 @@ public class IzomorphStellarTransformation extends JFrame
 
     private void findLinearInterpolation(Graphics g, Color color){
         g.setColor(color);
-        for (int i = 0; i < Z1.size(); i++) {
-            g.drawLine(convertX(Z1.get(i).x), convertY(Z1.get(i).y), convertX(Z2.get(i).x), convertY(Z2.get(i).y));
+        for (int i = 0; i < Z1draw.size(); i++) {
+            g.drawLine(convertX(Z1draw.get(i).x), convertY(Z1draw.get(i).y), convertX(Z2draw.get(i).x), convertY(Z2draw.get(i).y));
         }
     }
 }

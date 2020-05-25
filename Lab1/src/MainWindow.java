@@ -35,10 +35,10 @@ public class MainWindow extends JFrame {
         JLabel label2 = new JLabel("<html><p style='padding-left: 20px; font-size: 13px' color='red'>Z2</p></html>");
         ttlsRow.add(Box.createVerticalBox());
         ttlsRow.add(label1);
-        ttlsRow.add(Box.createVerticalBox());
-        ttlsRow.add(Box.createVerticalBox());
-        ttlsRow.add(Box.createVerticalBox());
-        ttlsRow.add(label2);
+//        ttlsRow.add(Box.createVerticalBox());
+//        ttlsRow.add(Box.createVerticalBox());
+//        ttlsRow.add(Box.createVerticalBox());
+//        ttlsRow.add(label2);
         ttlsRow.add(Box.createVerticalBox());
 
         JLabel xRow = new JLabel();
@@ -49,9 +49,9 @@ public class MainWindow extends JFrame {
         JTextField z2xInput = new JTextField();
         xRow.add(z1x);
         xRow.add(z1xInput);
-        xRow.add(Box.createVerticalBox());
-        xRow.add(z2x);
-        xRow.add(z2xInput);
+//        xRow.add(Box.createVerticalBox());
+//        xRow.add(z2x);
+//        xRow.add(z2xInput);
 
         JLabel yRow = new JLabel();
         yRow.setLayout(new GridLayout(1, 5));
@@ -61,9 +61,9 @@ public class MainWindow extends JFrame {
         JTextField z2yInput = new JTextField();
         yRow.add(z1y);
         yRow.add(z1yInput);
-        yRow.add(Box.createVerticalBox());
-        yRow.add(z2y);
-        yRow.add(z2yInput);
+//        yRow.add(Box.createVerticalBox());
+//        yRow.add(z2y);
+//        yRow.add(z2yInput);
 
         JLabel angleRow = new JLabel();
         angleRow.setLayout(new GridLayout(1, 5));
@@ -73,27 +73,27 @@ public class MainWindow extends JFrame {
         JTextField z2AngleInput = new JTextField();
         angleRow.add(z1Angle);
         angleRow.add(z1AngleInput);
-        angleRow.add(Box.createVerticalBox());
-        angleRow.add(z2Angle);
-        angleRow.add(z2AngleInput);
+//        angleRow.add(Box.createVerticalBox());
+//        angleRow.add(z2Angle);
+//        angleRow.add(z2AngleInput);
 
         JLabel btnRow = new JLabel();
         btnRow.setLayout(new GridLayout(1, 3));
         JButton btn = new JButton("Знайти перетворення");
         btn.addActionListener(e -> {
-            if (!nInput.getText().equals("") && !z1xInput.getText().equals("") && !z1yInput.getText().equals("") && !z2xInput.getText().equals("")
-                    && !z2yInput.getText().equals("") && !z1AngleInput.getText().equals("") && !z2AngleInput.getText().equals("")){
+            if (!nInput.getText().equals("") && !z1xInput.getText().equals("") && !z1yInput.getText().equals("")
+                     && !z1AngleInput.getText().equals("")){
                 int nTrans = Integer.parseInt(nInput.getText());
                 int xZ1 = Integer.parseInt(z1xInput.getText());
                 int yZ1 = Integer.parseInt(z1yInput.getText());
-                int xZ2 = Integer.parseInt(z2xInput.getText());
-                int yZ2 = Integer.parseInt(z2yInput.getText());
+                //int xZ2 = Integer.parseInt(z2xInput.getText());
+                //int yZ2 = Integer.parseInt(z2yInput.getText());
                 int angleZ1 = Integer.parseInt(z1AngleInput.getText());
-                int angleZ2 = Integer.parseInt(z2AngleInput.getText());
+                //int angleZ2 = Integer.parseInt(z2AngleInput.getText());
                 if (nTrans < 5){
                     JOptionPane.showMessageDialog(null, "<html><p style='font-size: 17px'>n повинне бути більше 4</p></html>");
                 } else {
-                    new IzomorphStellarTransformation(nTrans, xZ1, yZ1, angleZ1, xZ2, yZ2, angleZ2);
+                    new IzomorphStellarTransformation(nTrans, xZ1, yZ1, angleZ1);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "<html><p style='font-size: 17px'>Заповніть всі поля</p></html>");

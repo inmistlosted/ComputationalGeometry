@@ -24,10 +24,15 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="D:/SPOS/Lab5" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/Lab2" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Geometry\Lab1\src" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -96,7 +101,8 @@
       <workItem from="1590137504775" duration="3440000" />
       <workItem from="1590311929840" duration="598000" />
       <workItem from="1590332200198" duration="870000" />
-      <workItem from="1590393551203" duration="1712000" />
+      <workItem from="1590393551203" duration="4350000" />
+      <workItem from="1590431683014" duration="4737000" />
     </task>
     <servers />
   </component>
